@@ -1,9 +1,4 @@
-# Create Part 1 HTML (Foreword + Preface) in bilingual format with the polished UI the user liked.
-# We'll package this as /mnt/data/mvg_40p_part1_foreword_preface.html
-
-from textwrap import dedent
-
-html = dedent(r"""
+ 
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -352,10 +347,4 @@ html = dedent(r"""
 </div>
 </body>
 </html>
-""").strip()
 
-out_path = "/mnt/data/mvg_40p_part1_foreword_preface.html"
-with open(out_path, "w", encoding="utf-8") as f:
-    f.write(html)
-
-out_path
