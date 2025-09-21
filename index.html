@@ -1,21 +1,27 @@
+# Create Part 1 HTML (Foreword + Preface) in bilingual format with the polished UI the user liked.
+# We'll package this as /mnt/data/mvg_40p_part1_foreword_preface.html
+
+from textwrap import dedent
+
+html = dedent(r"""
 <!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Multiple View Geometry (Hartley & Zisserman) — Bản dịch 40 trang đầu</title>
+<title>MVG — Bản dịch song ngữ (40 trang đầu) · Phần 1: Foreword + Preface</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;650;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#0b0f14;
     --panel:#0f151c;
-    --card:#131a22;
-    --text:#e5edf5;
-    --muted:#9bb0c3;
+    --card:#111922;
+    --text:#e6eef6;
+    --muted:#9fb3c6;
     --brand:#4fc3f7;
     --accent:#a5d6a7;
-    --border:#1e2a36;
+    --border:#1b2836;
     --code:#0c1218;
   }
   *{box-sizing:border-box}
@@ -25,18 +31,15 @@
     font-family:"Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     background:linear-gradient(180deg, var(--bg), #0a0e13 40%, #0a0e13);
     color:var(--text);
-    line-height:1.55;
+    line-height:1.6;
   }
-
   .app{
     display:grid;
-    grid-template-columns: 280px 1fr;
-    gap:0;
+    grid-template-columns: 290px 1fr;
     min-height:100dvh;
   }
-  /* Sidebar */
   .sidebar{
-    position:sticky; top:0; align-self:start;
+    position:sticky; top:0;
     height:100dvh; overflow:auto;
     background:linear-gradient(180deg, var(--panel), #0e141b);
     border-right:1px solid var(--border);
@@ -44,7 +47,7 @@
   }
   .brand{
     display:flex; align-items:center; gap:10px;
-    padding:8px 10px; border-radius:12px;
+    padding:10px 12px; border-radius:12px;
     background:linear-gradient(135deg, #0e1620, #0f1723 60%, #0e141b);
     border:1px solid var(--border);
     margin-bottom:10px;
@@ -54,16 +57,14 @@
     background: radial-gradient(circle at 35% 35%, #7dd3fc, #22d3ee 60%, #0ea5e9);
     box-shadow:0 0 12px #22d3ee88;
   }
-  .brand h1{
-    font-size:14px; font-weight:700; letter-spacing:.3px; margin:0;
-  }
+  .brand h1{font-size:14px; font-weight:800; letter-spacing:.3px; margin:0;}
   .meta{
-    font-size:12px; color:var(--muted); padding:6px 10px 12px; border-bottom:1px dashed var(--border);
+    font-size:12px; color:var(--muted);
+    padding:8px 10px 12px; border-bottom:1px dashed var(--border);
     margin-bottom:12px;
   }
-
   .toc h2{
-    font-size:12px; font-weight:700; text-transform:uppercase;
+    font-size:12px; font-weight:800; text-transform:uppercase;
     letter-spacing:.12em; color:#bfe3ff; margin:12px 10px 6px;
   }
   .toc a{
@@ -76,10 +77,7 @@
     color:#e7f5ff; border:1px solid #14314a;
   }
 
-  /* Main */
-  .main{
-    padding:28px clamp(16px, 3vw, 40px);
-  }
+  .main{ padding:28px clamp(16px, 3vw, 42px); }
   .hero{
     background: radial-gradient(1200px 600px at 20% -10%, #14314a55, transparent 60%),
                 radial-gradient(900px 560px at 90% 10%, #1d3b2f5a, transparent 60%);
@@ -87,22 +85,18 @@
     border-radius:20px;
     padding:28px 26px;
     box-shadow: 0 10px 40px #0000003f inset, 0 2px 0 #0c1116;
+    margin-bottom:20px;
   }
   .hero h1{
     margin:0 0 8px;
-    font-size: clamp(20px, 4vw, 32px);
-    font-weight:800;
-    letter-spacing:.2px;
+    font-size: clamp(20px, 3.5vw, 30px);
+    font-weight:800; letter-spacing:.2px;
     background: linear-gradient(180deg, #e8f6ff, #cceaff 60%, #bfe3ff);
     -webkit-background-clip:text; background-clip:text; color:transparent;
     text-shadow: 0 0 24px #75cffc22;
   }
-  .hero .sub{
-    color:var(--muted); font-size:14px; margin-bottom:14px;
-  }
-  .chips{
-    display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;
-  }
+  .sub{ color:var(--muted); font-size:14px; margin-bottom:10px; }
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
   .chip{
     font-size:12px; color:#cde8ff; border:1px solid #1a2c3c;
     background:linear-gradient(180deg,#0c131a,#0b1117);
@@ -110,7 +104,7 @@
   }
 
   .section{
-    margin-top:24px;
+    margin-top:22px;
     background:linear-gradient(180deg, var(--card), #0f161e);
     border:1px solid var(--border);
     border-radius:20px;
@@ -118,39 +112,41 @@
     box-shadow: 0 12px 50px #00000028;
   }
   .section h2{
-    margin-top:0; margin-bottom:6px;
+    margin:0 0 4px;
     font-size: clamp(18px, 3vw, 26px);
     font-weight:800; letter-spacing:.2px;
   }
-  .section .kicker{
+  .kicker{
     font-size:12px; text-transform:uppercase; letter-spacing:.12em;
     color:#9bd1ff; margin-bottom:4px;
   }
-  .hr{ height:1px; background:linear-gradient(90deg, transparent, #243545, transparent); margin:12px 0 4px; }
+  .hr{ height:1px; background:linear-gradient(90deg, transparent, #243545, transparent); margin:12px 0 10px; }
 
-  .lead{ font-size:16px; color:#d7e8f7 }
-  p{ margin:10px 0; font-size:15px; }
+  .para{ margin:12px 0 16px; }
+  .para .en{
+    color:#cfe4fb; background:#0e1722; border:1px solid #18314a; padding:10px 12px; border-radius:12px; margin:0;
+  }
+  .para .vi{
+    color:#e7f4ff; padding:10px 12px; border-left:3px solid #2e4961; margin:6px 0 0; background:#0d151d; border-radius:12px;
+  }
   .note{
     font-size:13px; color:#cfe7ff; background:#0d151d; border:1px solid #193144;
-    padding:10px 12px; border-radius:12px;
-  }
-  .quote{
-    border-left:3px solid #2e4961; padding-left:14px; color:#cfe0f0;
-    background:#0d151d; border-radius:12px; padding-top:12px; padding-bottom:12px;
+    padding:10px 12px; border-radius:12px; margin-top:8px;
   }
 
-  .foot{
-    color:var(--muted); text-align:center; font-size:12px; margin:30px 0 10px;
+  .stitch{
+    margin-top:24px; font-size:14px; color:var(--muted);
+    background:#0e1620; border:1px dashed #1f3147; padding:12px 14px; border-radius:12px;
   }
 
-  /* Small screens */
+  .foot{ color:var(--muted); text-align:center; font-size:12px; margin:26px 0 6px; }
+
   @media (max-width: 980px){
     .app{ grid-template-columns:1fr; }
     .sidebar{ position:relative; height:auto; border-right:none; border-bottom:1px solid var(--border); border-radius:0 0 18px 18px; }
   }
 </style>
 <script>
-  // simple scrollspy
   document.addEventListener('DOMContentLoaded', () => {
     const links = Array.from(document.querySelectorAll('.toc a[href^="#"]'));
     const secs = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
@@ -170,80 +166,74 @@
   <aside class="sidebar">
     <div class="brand">
       <div class="dot"></div>
-      <h1>MVG — Bản dịch tiếng Việt</h1>
+      <h1>MVG — Bản dịch song ngữ (40 trang đầu)</h1>
     </div>
     <div class="meta">
       Nguồn: <em>Multiple View Geometry in Computer Vision (2nd Ed.)</em><br>
       Tác giả: Richard Hartley &amp; Andrew Zisserman<br>
-      Phạm vi: 40 trang đầu (dịch và định dạng)
+      Phần này: Foreword &amp; Preface (bản dịch song ngữ, trau chuốt)
     </div>
     <nav class="toc">
-      <h2>Mục lục (phần đã dịch)</h2>
-      <a href="#foreword">Lời nói đầu (O. Faugeras)</a>
-      <a href="#preface">Lời nói đầu của tác giả (Preface)</a>
-      <a href="#ch1">Chương 1. Dẫn nhập – Hình học đa ảnh</a>
-      <a href="#notes">Ghi chú & Phạm vi</a>
+      <h2>Mục lục Phần 1</h2>
+      <a href="#foreword">Foreword — Olivier Faugeras</a>
+      <a href="#preface">Preface — Lời nói đầu của tác giả</a>
+      <a href="#stitch">Hướng dẫn ghép các phần</a>
     </nav>
   </aside>
 
   <main class="main">
     <header class="hero">
-      <h1>Multiple View Geometry in Computer Vision — Bản dịch tiếng Việt (40 trang đầu)</h1>
-      <div class="sub">Dịch và trình bày lại để dễ đọc, có mục lục, phân đoạn, trích dẫn, ghi chú.</div>
+      <h1>Multiple View Geometry — Bản dịch song ngữ · Phần 1: Foreword + Preface</h1>
+      <div class="sub">Song ngữ từng đoạn (English → Tiếng Việt), giữ thuật ngữ gốc trong ngoặc để tiện học tập.</div>
       <div class="chips">
-        <span class="chip">Hình học chiếu & xạ ảnh</span>
-        <span class="chip">Camera & phép chiếu</span>
-        <span class="chip">Fundamental / Essential</span>
-        <span class="chip">Triangulation & Reconstruction</span>
-        <span class="chip">RANSAC & Ước lượng mạnh</span>
+        <span class="chip">Projective Geometry</span>
+        <span class="chip">Camera Models</span>
+        <span class="chip">Epipolar / Trifocal</span>
+        <span class="chip">Estimation &amp; Robust</span>
+        <span class="chip">Reconstruction</span>
       </div>
     </header>
 
     <!-- FOREWORD -->
     <section id="foreword" class="section">
       <div class="kicker">Foreword</div>
-      <h2>Lời nói đầu — Olivier Faugeras</h2>
+      <h2>Olivier Faugeras — Lời nói đầu</h2>
       <div class="hr"></div>
-      <p class="lead">
-        Khiến một máy tính “biết nhìn” từng được nhiều chuyên gia Trí tuệ Nhân tạo đánh giá là
-        một bài toán cỡ… sinh viên thực tập mùa hè hồi thập niên 60. Bốn mươi năm sau, nhiệm vụ
-        này vẫn chưa được giải quyết trọn vẹn và còn rất khó nhằn. Một lĩnh vực riêng đã ra đời —
-        <em>Thị giác máy tính</em> — với mối liên hệ chặt chẽ với toán học và khoa học máy tính,
-        cùng những liên hệ lỏng hơn với vật lý, tâm lý học thị giác và khoa học thần kinh.
-      </p>
-      <p>
-        Một lý do khả dĩ cho “một nửa thất bại” này là các nhà nghiên cứu đã bỏ qua một thực tế:
-        do “ảo tưởng tự quan sát” (naive introspection), ta tưởng như tri giác nói chung và thị giác
-        nói riêng ở động vật và con người là “đơn giản”, trong khi chúng phức tạp hơn nhiều so với hình dung.
-      </p>
-      <p>
-        Không nhất thiết phải mô phỏng y hệt hệ thị giác sinh học, nhưng thực tế là: (i) cách thị giác
-        sinh học hoạt động vẫn còn nhiều điều chưa biết, nên khó “chép” lên máy tính; và (ii) những nỗ lực
-        phớt lờ thị giác sinh học để “tái phát minh” một hệ thị giác silicon độc lập cũng không thành công
-        như kỳ vọng ban đầu.
-      </p>
-      <p>
-        Dẫu vậy, các nhà nghiên cứu đã đạt được nhiều thành tựu nổi bật — cả thực tiễn lẫn lý thuyết. Về
-        thực tiễn, ví dụ rõ nhất là khả năng dẫn đường cho xe trên đường hoặc địa hình gồ ghề bằng thị giác
-        máy tính, vốn đòi hỏi khả năng phân tích cảnh 3D động theo thời gian thực. Hôm nay, một số hãng xe đã
-        bắt đầu tích hợp vài chức năng như vậy.
-      </p>
-      <p>
-        Về lý thuyết, tiến bộ đáng kể đạt được trong cái gọi là <em>Thị giác hình học</em>: mô tả cách hình
-        dạng vật thể biến đổi khi quan sát từ các góc nhìn khác nhau, như một hàm của hình dạng đối tượng và
-        tham số camera. Công trình này không thể thiếu những công cụ hình học tinh vi, cả cũ và mới.
-      </p>
-      <p class="quote">
-        Cuốn sách này tập trung vào các quan hệ hình học tinh tế và đẹp đẽ giữa các ảnh của vật thể trong thế giới thực.
-        Chúng vừa đáng nghiên cứu vì bản thân khoa học cần lý giải “vì sao sự vật trông như vậy”, vừa hữu ích vì mở ra
-        nhiều ứng dụng thực tiễn. Hai tác giả — những người tiên phong — đã truyền đạt toán học nền tảng một cách dễ
-        tiếp cận; bao quát các kết quả quan trọng; gắn kết hình học với bản chất “nhiễu” của đo đạc ảnh; biến lý thuyết
-        thành thuật toán; và minh họa bằng nhiều ví dụ thực tế.
-      </p>
-      <p>
-        Trở lại “chén thánh” làm máy tính biết nhìn: liệu hướng đi này có đúng không? Hãy để độc giả tự trả lời. Với tôi,
-        bất kỳ hệ thống camera–máy tính nào trong tương lai gần cũng không thể bỏ qua công trình này.
-      </p>
+
+      <div class="para">
+        <p class="en">Making a computer see was something that leading experts in the field of Artificial Intelligence thought to be at the level of difficulty of a summer student’s project back in the sixties. Forty years later the task is still unsolved and seems formidable. A whole field, called Computer Vision, has emerged as a discipline in itself with strong connections to mathematics and computer science and looser connections to physics, the psychology of perception and the neuro sciences.</p>
+        <p class="vi"><strong>Cho máy tính “biết nhìn”</strong> từng được nhiều chuyên gia hàng đầu trong lĩnh vực Trí tuệ Nhân tạo (AI) hồi thập niên 1960 đánh giá chỉ tầm một dự án nhỏ cho sinh viên thực tập mùa hè. Bốn mươi năm sau, nhiệm vụ này vẫn chưa được giải quyết trọn vẹn và còn vô cùng thách thức. Từ đó, một ngành học độc lập mang tên <em>Thị giác máy tính</em> (Computer Vision) ra đời, gắn bó chặt chẽ với toán học và khoa học máy tính, và liên hệ lỏng hơn với vật lý, tâm lý học tri giác, cùng khoa học thần kinh.</p>
+      </div>
+
+      <div class="para">
+        <p class="en">One of the likely reasons for this half-failure is the fact that researchers had overlooked the fact, perhaps because of this plague called naive introspection, that perception in general and visual perception in particular are far more complex in animals and humans than was initially thought. There is of course no reason why we should pattern Computer Vision algorithms after biological ones, but the fact of the matter is that (i) the way biological vision works is still largely unknown and therefore hard to emulate on computers, and (ii) attempts to ignore biological vision and reinvent a sort of silicon-based vision have not been so successful as initially expected.</p>
+        <p class="vi">Một nguyên nhân đáng kể cho “sự nửa thành công – nửa thất bại” này là giới nghiên cứu đã xem nhẹ — vì thứ gọi là “ảo tưởng tự quan sát” (<em>naive introspection</em>) — rằng tri giác nói chung và thị giác nói riêng ở động vật và con người phức tạp hơn rất nhiều so với hình dung ban đầu. Dĩ nhiên không có lý do bắt buộc các thuật toán thị giác máy tính phải noi theo thị giác sinh học; song thực tế là: (i) cơ chế thị giác sinh học vẫn còn nhiều phần chưa được hiểu rõ, nên rất khó mô phỏng trên máy; và (ii) những nỗ lực phớt lờ thị giác sinh học để tái phát minh một “thị giác silicon” đã không đạt thành công như kỳ vọng.</p>
+      </div>
+
+      <div class="para">
+        <p class="en">Despite these negative remarks, Computer Vision researchers have obtained some outstanding successes, both practical and theoretical. On the side of practice, and to single out one example, the possibility of guiding vehicles such as cars and trucks on regular roads or on rough terrain using computer vision technology was demonstrated many years ago in Europe, the USA and Japan. This requires capabilities for real-time three-dimensional dynamic scene analysis which are quite elaborate. Today, car manufacturers are slowly incorporating some of these functions in their products.</p>
+        <p class="vi">Dẫu vậy, các nhà nghiên cứu thị giác máy tính đã đạt nhiều thành tựu đáng kể cả về thực tiễn lẫn lý thuyết. Về thực tiễn, có thể kể đến ví dụ điển hình: công nghệ thị giác máy tính đã chứng minh khả năng <em>dẫn đường cho phương tiện</em> (ô tô, xe tải) trên đường thường lẫn địa hình gồ ghề tại châu Âu, Mỹ, Nhật từ nhiều năm trước. Điều này đòi hỏi năng lực phân tích cảnh 3D động theo thời gian thực rất tinh vi. Hiện nay, các hãng xe hơi dần tích hợp một số chức năng như vậy vào sản phẩm của mình.</p>
+      </div>
+
+      <div class="para">
+        <p class="en">On the theoretical side some remarkable progress has been achieved in the area of what one could call geometric Computer Vision. This includes the description of the way the appearance of objects changes when viewed from different viewpoints as a function of the objects’ shape and the cameras parameters. This endeavour would not have been achieved without the use of fairly sophisticated mathematical techniques encompassing many areas of geometry, ancient and novel. This book deals in particular with the intricate and beautiful geometric relations that exist between the images of objects in the world.</p>
+        <p class="vi">Về lý thuyết, tiến bộ vượt bậc đến từ nhánh có thể gọi là <em>Thị giác hình học</em> (geometric Computer Vision): mô tả cách vẻ ngoài của vật thể thay đổi khi quan sát từ các góc nhìn khác nhau, như một hàm của hình dạng vật thể và tham số camera. Nỗ lực này không thể thành công nếu thiếu các công cụ toán học tinh vi, bao quát nhiều mảng hình học cũ và mới. Cuốn sách này đặc biệt tập trung vào các quan hệ hình học tinh tế và đẹp đẽ giữa các ảnh của vật thể trong thế giới thực.</p>
+      </div>
+
+      <div class="para">
+        <p class="en">These relations are important to analyze for their own sake because this is one of the goals of science to provide explanations for appearances; they are also important to analyze because of the range of applications their understanding opens up.</p>
+        <p class="vi">Những quan hệ ấy đáng được nghiên cứu vì chính bản thân khoa học có mục tiêu lý giải “tại sao sự vật xuất hiện như ta thấy”; và chúng càng quan trọng bởi hiểu biết này mở ra một dải rộng ứng dụng thực tiễn.</p>
+      </div>
+
+      <div class="para">
+        <p class="en">The book has been written by two pioneers and leading experts in geometric Computer Vision. They have succeeded in what was something of a challenge, namely to convey in a simple and easily accessible way the mathematics that is necessary for understanding the underlying geometric concepts, to be quite exhaustive in the coverage of the results that have been obtained by them and other researchers worldwide, to analyze the interplay between the geometry and the fact that the image measurements are necessarily noisy, to express many of these theoretical results in algorithmic form so that they can readily be transformed into computer code, and to present many real examples that illustrate the concepts and show the range of applicability of the theory.</p>
+        <p class="vi">Cuốn sách do hai nhà tiên phong và chuyên gia hàng đầu trong lĩnh vực này biên soạn. Họ đã thành công ở một thử thách khó: truyền đạt những toán học cốt lõi cho việc hiểu các khái niệm hình học nền tảng theo cách giản dị, dễ tiếp cận; bao quát gần như đầy đủ các kết quả của chính họ và cộng đồng; phân tích mối liên hệ giữa hình học và hiện thực đo đạc ảnh luôn nhiễu; diễn dịch nhiều kết quả lý thuyết thành dạng thuật toán sẵn sàng chuyển hóa thành mã chương trình; và đưa ra nhiều ví dụ thực tế minh họa khái niệm, thể hiện phạm vi áp dụng của lý thuyết.</p>
+      </div>
+
+      <div class="para">
+        <p class="en">Returning to the original holy grail of making a computer see we may wonder whether this kind of work is a step in the right direction. I must leave the readers of the book to answer this question, and be content with saying that no designer of systems using cameras hooked to computers that will be built in the foreseeable future can ignore this work. This is perhaps a step in the direction of defining what it means for a computer to see.</p>
+        <p class="vi">Trở lại “chén thánh” của ngành: làm thế nào để máy tính biết nhìn — đây có phải hướng đi đúng? Tôi xin nhường câu trả lời cho độc giả và chỉ muốn nói rằng: bất kỳ người thiết kế hệ thống camera–máy tính nào trong tương lai gần cũng khó có thể bỏ qua công trình này. Có lẽ đây chính là một bước tiến trong hành trình xác định “máy tính biết nhìn” nghĩa là gì.</p>
+      </div>
     </section>
 
     <!-- PREFACE -->
@@ -251,163 +241,121 @@
       <div class="kicker">Preface</div>
       <h2>Lời nói đầu của tác giả</h2>
       <div class="hr"></div>
-      <p class="lead">
-        Trong thập niên qua, hiểu biết và mô hình hóa hình học đa ảnh đã phát triển nhanh chóng. Lý thuyết và thực hành
-        hiện đã chín muồi, cho phép giải các bài toán từng “bó tay” trước đây — thậm chí bị xem là bất khả thi.
-      </p>
-      <p><strong>Những tác vụ/thuật toán tiêu biểu:</strong></p>
-      <ul>
-        <li>Cho hai ảnh, không thêm thông tin: khớp điểm, ước lượng vị trí 3D của các điểm và các camera.</li>
-        <li>Cho ba ảnh, tương tự với điểm và đường thẳng; suy ra camera và thực thể 3D.</li>
-        <li>Tự suy epipolar (stereo) và trifocal (trinocular) mà không cần bàn cờ hiệu chuẩn.</li>
-        <li>Tự hiệu chuẩn nội tại từ chuỗi ảnh cảnh tự nhiên (“on the fly”).</li>
-      </ul>
-      <p>
-        Điểm đặc trưng: các thuật toán <em>không cần hiệu chuẩn</em> (uncalibrated). Không cần biết trước tham số nội
-        (như tiêu cự).
-      </p>
-      <p>
-        Nền tảng là hiểu biết mới, đầy đủ hơn về hình học đa ảnh không hiệu chuẩn: số tham số, các ràng buộc giữa các
-        thực thể ảnh (điểm/đường), và cách truy xuất camera & điểm 3D từ tương ứng ảnh. Chẳng hạn, để xác định epipolar
-        cho stereo chỉ cần 7 tham số, suy từ ≥7 cặp điểm tương ứng — trái với cách “có chuẩn” trước đây (mỗi camera 11
-        tham số, cần ảnh của vật thể hiệu chuẩn).
-      </p>
-      <p>
-        Một ngộ nhận thường thấy: trong khung không hiệu chuẩn, “toạ độ điểm 3D chỉ khôi phục tới một mức mơ hồ nào đó”
-        không đồng nghĩa “ước lượng kém”; đó là <em>sự mơ hồ có cấu trúc</em> và được định nghĩa rõ ràng (ví dụ mơ hồ
-        chiếu–xạ).
-      </p>
-      <p>
-        Trên thực tế, không phải lúc nào cũng có thể hiệu chuẩn camera một lần dùng mãi: camera có thể di chuyển, zoom; hay
-        đơn giản là không có dữ liệu chuẩn (ví dụ dựng mô hình VR từ phim tư liệu). Do đó nhánh “không hiệu chuẩn” trở nên
-        rất quan trọng.
-      </p>
-      <p><strong>Hai bước tiến lớn về ước lượng từ ảnh:</strong></p>
-      <ul>
-        <li>Chú trọng <em>hàm lỗi đúng</em> cần tối thiểu trong hệ dư phương trình: đại số, hình học, hay thống kê (ML).</li>
-        <li>Dùng các kỹ thuật <em>robust</em> (RANSAC…) để miễn nhiễm với ngoại lai.</li>
-      </ul>
-      <p><strong>Các bài toán coi như đã “giải”: </strong>ước lượng các <em>tensor đa ảnh</em> (đặc biệt <em>F</em> và <em>T</em>);
-        trích xuất ma trận camera từ các tensor và tái thiết dự án (projective) từ 2/3/4 ảnh.</p>
-      <p><strong>Những chủ đề đã rất tiến bộ nhưng còn mở:</strong> bundle adjustment tổng quát; nâng cấp lên Euclid (metric) với
-        giả định tối thiểu; tìm tương ứng tự động và loại ngoại lai bằng ràng buộc tensor đa ảnh.</p>
 
-      <p class="note"><strong>Lộ trình sách:</strong> Phần 0 (nền tảng) → Phần I (camera & ảnh đơn) → Phần II (hai ảnh, F) → Phần III
-        (ba ảnh, tensor ba tuyến) → Phần IV (N ảnh: factorization, auto-calib, mơ hồ) → Phụ lục (tensor, ML, đại số ma trận,
-        tối ưu bình phương tối thiểu, lặp…)</p>
+      <div class="para">
+        <p class="en">Over the past decade there has been a rapid development in the understanding and modelling of the geometry of multiple views in computer vision. The theory and practice have now reached a level of maturity where excellent results can be achieved for problems that were certainly unsolved a decade ago, and often thought unsolvable.</p>
+        <p class="vi">Trong thập niên qua, hiểu biết và mô hình hoá về hình học đa ảnh trong thị giác máy tính đã phát triển nhanh chóng. Hiện nay, lý thuyết và thực hành đã đạt độ chín, cho phép giải quyết xuất sắc các bài toán vốn chưa có lời giải cách đây mười năm — thậm chí từng bị xem là bất khả thi.</p>
+      </div>
+
+      <div class="para">
+        <p class="en">These tasks and algorithms include: (•) Given two images, and no other information, compute matches between the images, and the 3D position of the points that generate these matches and the cameras that generate the images. (•) Given three images, and no other information, similarly compute the matches between images of points and lines, and the position in 3D of these points and lines and the cameras. (•) Compute the epipolar geometry of a stereo rig, and trifocal geometry of a trinocular rig, without requiring a calibration object. (•) Compute the internal calibration of a camera from a sequence of images of natural scenes (i.e. calibration “on the fly”).</p>
+        <p class="vi">Những tác vụ/thuật toán tiêu biểu gồm: (•) Với hai ảnh và không có thông tin phụ, tính tương ứng điểm giữa ảnh, vị trí 3D của các điểm đó, cùng tham số camera sinh ra ảnh. (•) Với ba ảnh và không có thông tin phụ, tính tương ứng điểm–đường, vị trí 3D của chúng và tham số ba camera. (•) Tính hình học epipolar của cặp stereo và hình học trifocal của bộ ba camera mà không cần vật thể hiệu chuẩn. (•) Suy hiệu chuẩn nội tại của camera từ chuỗi ảnh cảnh tự nhiên (<em>on the fly</em>).</p>
+      </div>
+
+      <div class="para">
+        <p class="en">The distinctive flavour of these algorithms is that they are uncalibrated — it is not necessary to know or first need to compute the camera internal parameters (such as the focal length).</p>
+        <p class="vi">Điểm đặc trưng của các thuật toán này là <strong>không cần hiệu chuẩn</strong> — không cần biết trước hoặc ước lượng trước các tham số nội tại của camera (như tiêu cự).</p>
+      </div>
+
+      <div class="para">
+        <p class="en">Underpinning these algorithms is a new and more complete theoretical understanding of the geometry of multiple uncalibrated views: the number of parameters involved, the constraints between points and lines imaged in the views; and the retrieval of cameras and 3-space points from image correspondences. For example, to determine the epipolar geometry of a stereo rig requires specifying only seven parameters, the camera calibration is not required. These parameters are determined from the correspondence of seven or more image point correspondences. Contrast this uncalibrated route, with the previous calibrated route of a decade ago: each camera would first be calibrated from the image of a carefully engineered calibration object with known geometry. The calibration involves determining 11 parameters for each camera. The epipolar geometry would then have been computed from these two sets of 11 parameters.</p>
+        <p class="vi">Nền tảng cho các thuật toán là một hiểu biết mới, đầy đủ hơn về hình học đa ảnh <em>không hiệu chuẩn</em>: số tham số liên quan, các ràng buộc giữa điểm và đường thẳng trong ảnh; và cách suy camera cùng điểm 3D từ các tương ứng ảnh. Chẳng hạn, để xác định epipolar của một hệ stereo chỉ cần bảy tham số — không cần hiệu chuẩn camera. Bảy tham số này suy ra từ bảy (hoặc nhiều hơn) cặp điểm tương ứng. So sánh với hướng “có hiệu chuẩn” phổ biến cách đây một thập niên: mỗi camera phải được hiệu chuẩn trước bằng một vật thể chuẩn được thiết kế công phu (biết hình học chính xác), cần ước lượng 11 tham số cho mỗi camera; rồi mới tính epipolar từ hai bộ tham số 11 ấy.</p>
+      </div>
+
+      <div class="para">
+        <p class="en">This example illustrates the importance of the uncalibrated (projective) approach – using the appropriate representation of the geometry makes explicit the parameters that are required at each stage of a computation. This avoids computing parameters that have no effect on the final result, and results in simpler algorithms. It is also worth correcting a possible misconception. In the uncalibrated framework, entities (for instance point positions in 3-space) are often recovered to within a precisely defined ambiguity. This ambiguity does not mean that the points are poorly estimated.</p>
+        <p class="vi">Ví dụ trên cho thấy tầm quan trọng của tiếp cận <em>không hiệu chuẩn (chiếu–xạ)</em>: chọn biểu diễn hình học phù hợp sẽ làm rõ <em>đúng</em> những tham số cần ở từng bước tính toán, tránh ước lượng các tham số không ảnh hưởng kết quả, từ đó thuật toán gọn nhẹ hơn. Cũng cần chỉnh một ngộ nhận: trong khung không hiệu chuẩn, các thực thể (ví dụ vị trí điểm 3D) thường được khôi phục trong một <em>mức mơ hồ</em> được xác định chặt chẽ; điều này <strong>không</strong> có nghĩa là ước lượng “kém chính xác”.</p>
+      </div>
+
+      <div class="para">
+        <p class="en">More practically, it is often not possible to calibrate cameras once-and-for-all; for instance where cameras are moved (on a mobile vehicle) or internal parameters are changed (a surveillance camera with zoom). Furthermore, calibration information is simply not available in some circumstances. Imagine computing the motion of a camera from a video sequence, or building a virtual reality model from archive film footage where both motion and internal calibration information are unknown.</p>
+        <p class="vi">Về mặt thực tế, hiếm khi có thể hiệu chuẩn camera “một lần dùng mãi”: camera có thể di chuyển (gắn trên phương tiện), tham số nội có thể thay đổi (camera giám sát có zoom). Nhiều khi đơn giản là không có dữ liệu hiệu chuẩn: ví dụ ước lượng chuyển động camera từ chuỗi video, hay dựng mô hình thực tế ảo từ phim tư liệu lưu trữ — nơi vừa chuyển động vừa tham số nội đều không biết.</p>
+      </div>
+
+      <div class="para">
+        <p class="en">The achievements in multiple view geometry have been possible because of developments in our theoretical understanding, but also because of improvements in estimating mathematical objects from images. The first improvement has been an attention to the error that should be minimized in over-determined systems – whether it be algebraic, geometric or statistical. The second improvement has been the use of robust estimation algorithms (such as RANSAC), so that the estimate is unaffected by “outliers” in the data. Also these techniques have generated powerful search and matching algorithms.</p>
+        <p class="vi">Thành tựu của hình học đa ảnh có được nhờ cả tiến bộ lý thuyết lẫn tiến bộ về ước lượng từ ảnh. Thứ nhất là quan tâm đúng loại <em>hàm lỗi</em> cần tối thiểu trong hệ thừa phương trình — có thể là lỗi đại số, lỗi hình học hoặc lỗi thống kê (ML). Thứ hai là dùng các thuật toán ước lượng <em>robust</em> (như RANSAC) để giảm tác động của ngoại lai. Kéo theo đó là các kỹ thuật dò tìm và khớp nối mạnh mẽ.</p>
+      </div>
+
+      <div class="para">
+        <p class="en">Many of the problems of reconstruction have now reached a level where we may claim that they are solved. Such problems include: (i) Estimation of the multifocal tensors from image point correspondences, particularly the fundamental matrix and trifocal tensors (the quadrifocal tensor having not received so much attention). (ii) Extraction of the camera matrices from these tensors, and subsequent projective reconstruction from two, three and four views.</p>
+        <p class="vi">Nhiều bài toán tái thiết hiện đã đạt đến mức có thể coi là “đã giải”: (i) Ước lượng các tensor đa tiêu cự (multifocal) từ tương ứng điểm, đặc biệt là ma trận cơ bản (F) và tensor ba tuyến (trifocal) — tensor bốn tuyến (quadrifocal) ít được chú ý hơn; (ii) Trích xuất ma trận camera từ các tensor đó, rồi tái thiết chiếu–xạ từ hai, ba, bốn ảnh.</p>
+      </div>
+
+      <div class="para">
+        <p class="en">Other significant successes have been achieved, though there may be more to learn about these problems. Examples include: (i) Application of bundle adjustment to solve more general reconstruction problems. (ii) Metric (Euclidean) reconstruction given minimal assumptions on the camera matrices. (iii) Automatic detection of correspondences in image sequences, and elimination of outliers and false matches using the multifocal tensor relationships.</p>
+        <p class="vi">Những thành công khác cũng đáng kể, dù còn nhiều điều để học hỏi thêm, ví dụ: (i) Ứng dụng <em>bundle adjustment</em> để giải các bài toán tái thiết tổng quát hơn; (ii) Tái thiết metric (Euclid) với các giả định tối thiểu về ma trận camera; (iii) Tự động phát hiện tương ứng trong chuỗi ảnh và loại ngoại lai/khớp sai bằng các quan hệ tensor đa ảnh.</p>
+      </div>
+
+      <div class="para">
+        <p class="en">Roadplan. The book is divided into six parts and there are seven short appendices. Each part introduces a new geometric relation: the homography for background, the camera matrix for single view, the fundamental matrix for two views, the trifocal tensor for three views, and the quadrifocal tensor for four views. In each case there is a chapter describing the relation, its properties and applications, and a companion chapter describing algorithms for its estimation from image measurements. The estimation algorithms described range from cheap, simple, approaches through to the optimal algorithms which are currently believed to be the best available.</p>
+        <p class="vi"><strong>Lộ trình.</strong> Sách chia thành sáu phần và bảy phụ lục ngắn. Mỗi phần giới thiệu một quan hệ hình học mới: phép <em>homography</em> cho phần nền tảng; ma trận <em>camera</em> cho ảnh đơn; <em>ma trận cơ bản</em> (fundamental matrix) cho hai ảnh; <em>tensor ba tuyến</em> cho ba ảnh; và <em>tensor bốn tuyến</em> cho bốn ảnh. Mỗi quan hệ có một chương mô tả khái niệm, tính chất, ứng dụng; kèm một chương “đôi” mô tả các thuật toán ước lượng từ dữ liệu ảnh. Các thuật toán trải từ cách tiếp cận rẻ/đơn giản đến các thuật toán tối ưu hiện được xem là tốt nhất.</p>
+      </div>
+
+      <div class="para">
+        <p class="en">Part 0: Background. This part is more tutorial than the others. It introduces the central ideas in the projective geometry of 2-space and 3-space (for example ideal points, and the absolute conic); how this geometry may be represented, manipulated, and estimated; and how the geometry relates to various objectives in computer vision such as rectifying images of planes to remove perspective distortion.</p>
+        <p class="vi"><strong>Phần 0 — Nền tảng.</strong> Tính hướng dẫn cao hơn các phần khác: giới thiệu những ý niệm trung tâm của hình học chiếu–xạ 2D và 3D (ví dụ điểm ở vô cực, conic tuyệt đối); cách biểu diễn, thao tác và ước lượng; và mối liên hệ với các mục tiêu trong thị giác máy tính như hiệu chỉnh ảnh phẳng để loại méo phối cảnh.</p>
+      </div>
+
+      <div class="para">
+        <p class="en">Part 1: Single view geometry. Here the various cameras that model the perspective projection from 3-space to an image are defined and their anatomy explored. Their estimation using traditional techniques of calibration objects is described, as well as camera calibration from vanishing points and vanishing lines.</p>
+        <p class="vi"><strong>Phần I — Hình học ảnh đơn.</strong> Định nghĩa các kiểu camera mô hình hoá phép chiếu phối cảnh từ 3D lên ảnh và phân tích “cấu trúc giải phẫu” của chúng. Trình bày các phương pháp ước lượng bằng vật thể hiệu chuẩn truyền thống, cũng như hiệu chuẩn từ <em>điểm/đường biến mất</em> (vanishing points/lines).</p>
+      </div>
+
+      <div class="para">
+        <p class="en">Part 2: Two view geometry. This part describes the epipolar geometry of two cameras, projective reconstruction from image point correspondences, methods of resolving the projective ambiguity, optimal triangulation, transfer between views via planes.</p>
+        <p class="vi"><strong>Phần II — Hình học hai ảnh.</strong> Mô tả hình học epipolar của hai camera; tái thiết chiếu–xạ từ tương ứng điểm ảnh; cách xử lý mơ hồ chiếu–xạ; <em>tam giác hoá tối ưu</em> (optimal triangulation); truyền qua lại giữa các ảnh thông qua mặt phẳng.</p>
+      </div>
+
+      <div class="para">
+        <p class="en">Part 3: Three view geometry. Here the trifocal geometry of three cameras is described, including transfer of a point correspondence from two views to a third, and similarly transfer for a line correspondence; computation of the geometry from point and line correspondences, retrieval of the camera matrices.</p>
+        <p class="vi"><strong>Phần III — Hình học ba ảnh.</strong> Trình bày hình học trifocal của ba camera: truyền tương ứng điểm từ hai ảnh sang ảnh thứ ba; tương tự với đường thẳng; ước lượng hình học từ tương ứng điểm/đường; khôi phục ma trận camera.</p>
+      </div>
+
+      <div class="para">
+        <p class="en">Part 4: N-views. This part has two purposes. First, it extends three view geometry to four views (a minor extension) and describes estimation methods applicable to N-views, such as the factorization algorithm of Tomasi and Kanade for computing structure and motion simultaneously from multiple images. Second, it covers themes that have been touched on in earlier chapters, but can be understood more fully and uniformly by emphasising their commonality. Examples include deriving multi-linear view constraints on correspondences, auto-calibration, and ambiguous solutions.</p>
+        <p class="vi"><strong>Phần IV — N ảnh.</strong> Mục tiêu kép: (1) Mở rộng ba ảnh lên bốn ảnh (mở rộng nhỏ) và mô tả các phương pháp ước lượng áp dụng cho N ảnh, như thuật toán <em>factorization</em> của Tomasi–Kanade để đồng thời suy cấu trúc và chuyển động từ nhiều ảnh; (2) Gom lại các chủ đề đã chạm đến trước đó để lý giải thống nhất — chẳng hạn suy các ràng buộc đa tuyến giữa các ảnh, tự hiệu chuẩn, và các nghiệm mơ hồ.</p>
+      </div>
+
+      <div class="para">
+        <p class="en">Appendices. These describe further background material on tensors, statistics, parameter estimation, linear and matrix algebra, iterative estimation, the solution of sparse matrix systems, and special projective transformations.</p>
+        <p class="vi"><strong>Phụ lục.</strong> Bổ sung nền tảng về tensor, thống kê, ước lượng tham số, đại số tuyến tính & ma trận, ước lượng lặp, giải hệ thưa, và các biến đổi chiếu–xạ đặc biệt.</p>
+      </div>
+
+      <div class="para">
+        <p class="en">Acknowledgements. We have benefited enormously from ideas and discussions with our colleagues: ... [omitted list preserved in the book].</p>
+        <p class="vi"><strong>Lời cảm ơn.</strong> Chúng tôi biết ơn sâu sắc các đồng nghiệp vì ý tưởng và trao đổi chuyên môn: ... [danh sách giữ nguyên như trong sách].</p>
+      </div>
+
+      <div class="para">
+        <p class="en">The second edition. This new paperback edition has been expanded to include some of the developments since the original version of July 2000. ... The figures appearing in this book can be downloaded from http://www.robots.ox.ac.uk/~vgg/hzbook.html ...</p>
+        <p class="vi"><strong>Tái bản lần hai.</strong> Ấn bản mới được mở rộng để bao gồm một số phát triển từ sau bản gốc tháng 7/2000. ... Các hình minh hoạ trong sách có thể tải tại: http://www.robots.ox.ac.uk/~vgg/hzbook.html ...</p>
+      </div>
+
+      <div class="note">Lưu ý: Một số đoạn danh sách tên riêng/địa chỉ web giữ nguyên theo bản gốc để đảm bảo tính chính xác trích dẫn.</div>
     </section>
 
-    <!-- CHAPTER 1 -->
-    <section id="ch1" class="section">
-      <div class="kicker">Chapter 1</div>
-      <h2>Dẫn nhập — Hành trình qua Hình học đa ảnh</h2>
+    <section id="stitch" class="section stitch">
+      <h2>Hướng dẫn ghép nối các phần</h2>
       <div class="hr"></div>
-
-      <h3>1.1. Hình học chiếu–xạ: “ở đâu cũng có”</h3>
-      <p>
-        Khi nhìn một bức ảnh, ta thấy “hình vuông” có thể trông như hình bình hành, “đường tròn” thành ellipse. Phép biến đổi
-        biến “hình thật” trên mặt phẳng vào ảnh chính là <em>phép chiếu–xạ</em> (projective). Nó không bảo toàn độ dài, góc,
-        hay tỉ lệ khoảng cách; cái được bảo toàn là tính “thẳng hàng”.
-      </p>
-      <p>
-        Lý do phải dùng hình học chiếu–xạ bắt đầu từ khó khăn của hệ Euclid: khái niệm “song song” (không cắt nhau) buộc ta phải
-        nói “gặp nhau ở vô cực”. Cách giải quyết thanh lịch là mở rộng mặt phẳng Euclid thành <em>mặt phẳng chiếu–xạ</em> bằng
-        cách thêm “các điểm ở vô cực” — khi đó mọi cặp đường thẳng đều cắt nhau (có thể tại vô cực).
-      </p>
-      <p>
-        Ta dùng <em>tọa độ thuần nhất</em> để mô tả các điểm (x, y, w) với hai bộ toạ độ khác nhau tỉ lệ nhau biểu diễn cùng một
-        điểm. Điểm có w=0 nằm “ở vô cực”. Khái niệm này mở rộng tự nhiên sang 3D.
-      </p>
-      <p>
-        Trong hình học chiếu–xạ, <em>biến đổi chiếu–xạ</em> chính là nhân một ma trận khả nghịch (n+1)×(n+1) lên vector thuần
-        nhất. Khác với Euclid/affine, biến đổi chiếu–xạ có thể đưa các điểm ở vô cực về điểm hữu hạn và ngược lại.
-      </p>
-
-      <h4>1.1.1. Từ chiếu–xạ → affine → Euclid</h4>
-      <p>
-        Nếu ta chọn và “đóng đinh” một <em>đường thẳng ở vô cực</em> trên mặt phẳng chiếu–xạ, ta thu được hình học <em>affine</em>:
-        lúc này khái niệm song song có nghĩa. Tiếp nữa, khi chọn thêm hai <em>điểm tròn</em> (circular points) trên đường vô cực (là
-        nghiệm phức chung của mọi đường tròn), ta thu được hình học Euclid: khi ấy góc, độ dài (tỉ lệ) có thể định nghĩa lại thông
-        qua hai điểm tròn đó.
-      </p>
-      <p>
-        Tương tự trong 3D, tất cả các mặt cầu cắt nhau trên <em>mặt phẳng ở vô cực</em> tạo thành một <em>conic tuyệt đối</em>
-        (absolute conic) — đối tượng then chốt để nối lại với “thế giới Euclid”, và liên hệ trực tiếp đến <em>hiệu chuẩn camera</em>.
-      </p>
-
-      <h3>1.2. Phép chiếu của Camera</h3>
-      <p>
-        Mô hình camera xuyên tâm: từ điểm 3D kéo tia qua tâm chiếu gặp mặt phẳng ảnh. Biểu diễn bằng ma trận camera
-        <code>P (3×4)</code> có hạng 3, ánh xạ toạ độ thuần nhất 3D sang thuần nhất 2D. Nếu cảnh là phẳng, phép chiếu rút gọn thành
-        <em>phép chiếu–xạ phẳng</em> <code>H (3×3)</code>.
-      </p>
-      <p>
-        Một quan sát quan trọng: tất cả ảnh chụp từ <em>cùng một tâm camera</em> là tương đương tới một phép chiếu–xạ 2D (chỉ khác
-        hệ toạ độ ảnh). Điều khác biệt thực sự xuất hiện khi tâm camera thay đổi.
-      </p>
-      <p>
-        Về hiệu chuẩn (calibration): “ảnh của conic tuyệt đối” (IAC, ký hiệu ω) nằm trên ảnh. Biết ω cho phép đo góc giữa hai tia
-        chiếu ngay trên ảnh, tính FOV, hoặc nhận biết một ellipse ảnh có truy ngược thành nón tròn hay không. Vì vậy, ω là chìa khóa
-        nối không gian Euclid với ảnh.
-      </p>
-
-      <h3>1.3. Tái thiết từ &gt;= 2 ảnh</h3>
-      <p>
-        Với hai ảnh và các cặp điểm tương ứng <code>x ↔ x′</code>, ta có <em>ma trận cơ bản</em> <code>F</code> (rank 2) thỏa <code>x′ᵀFx=0</code>.
-        Từ F, suy ra được (tới một biến đổi chiếu–xạ 3D) hai ma trận camera <code>P, P′</code>; sau đó <em>triangulation</em> để tìm điểm 3D.
-      </p>
-      <p>
-        Độ mơ hồ dự án (projective ambiguity) là tối đa khi không biết chuẩn; cần ít nhất 7 cặp điểm (tránh cấu hình suy biến). Dòng
-        chảy thuật toán: ước lượng F → khôi phục (P,P′) → triangulate các điểm.
-      </p>
-
-      <h3>1.4. Ba ảnh — Tensor ba tuyến (trifocal)</h3>
-      <p>
-        Tương tự F cho 2 ảnh, ba ảnh được mã hoá bởi <em>tensor ba tuyến</em> <code>T</code> (3×3×3). Nó biểu diễn các quan hệ truyền (transfer)
-        giữa điểm–đường qua ba ảnh, cho phép khôi phục ba camera (tới projective). Có thể ước lượng <code>T</code> từ các tương ứng điểm
-        (kết hợp với đường), tối thiểu 6–7 điểm (phi tuyến/chuẩn hoá).
-      </p>
-
-      <h3>1.5. Bốn & N ảnh — Factorization & Bundle Adjustment</h3>
-      <p>
-        Tensor bốn tuyến hiếm dùng (khó thỏa ràng buộc nội). Thực tế, với N ảnh người ta dùng:
-        <em>factorization</em> (affine → mở rộng projective) khi nhiều điểm nhìn thấy trong mọi ảnh; hoặc <em>bundle adjustment</em> (BA) —
-        tối ưu phi tuyến toàn cục (ML) cho camera & cấu trúc, miễn là có khởi tạo tốt (từ F/T, PnP, v.v.).
-      </p>
-
-      <h3>1.6. Truyền (Transfer)</h3>
-      <p>
-        Biết quan hệ giữa các ảnh (F/T hoặc camera), từ một/two-view quan sát của điểm, ta suy vị trí của nó ở ảnh khác mà <em>không
-        nhất thiết</em> phải dựng 3D tường minh (dùng ràng buộc tensor), hoặc có thể dựng 3D rồi chiếu (P′′X).
-      </p>
-
-      <h3>1.7. Tái thiết Euclid</h3>
-      <p>
-        Tái thiết projective có thể gây méo hình khó chịu với con người (ví dụ cái cốc “kỳ dị”). Để về đúng “hình thật”, ta cần tìm
-        lại cấu trúc Euclid — tương đương xác định <em>conic tuyệt đối</em> trong không gian. Khi camera đã hiệu chuẩn, giao các nón
-        ngược chiếu của ω trên nhiều ảnh sẽ xác định conic tuyệt đối, từ đó nâng cấp Euclid.
-      </p>
-
-      <h3>1.8. Tự hiệu chuẩn (Auto-calibration)</h3>
-      <p>
-        Nếu hoàn toàn không biết chuẩn, không thể vượt quá projective. Nhưng chỉ cần biết rất ít (ví dụ <em>ma trận nội</em> giống nhau
-        qua các ảnh, hoặc một số ràng buộc về K), ta có thể xác định vị trí ω (IAC) và từ đó tự hiệu chuẩn.
-      </p>
+      <ol>
+        <li>Mỗi phần mình gửi cho bạn là <strong>một file HTML hoàn chỉnh</strong> (có &lt;html&gt;...&lt;/html&gt;).</li>
+        <li>Để ghép thành <em>một file duy nhất</em>, hãy mở file <code>part1</code> (file này) và tìm thẻ: <code>&lt;main class="main"&gt;</code>.</li>
+        <li>Ở các file phần sau (ví dụ <code>part2</code>, <code>part3</code>), chỉ <strong>copy các &lt;section&gt;...</strong> bên trong <code>&lt;main&gt;</code> và <strong>dán</strong> vào <code>part1</code> <em>ngay trước</em> dòng <code>&lt;div class="foot"&gt;</code> (hoặc trước <code>&lt;/main&gt;</code>).</li>
+        <li>Không cần lặp lại phần <code>&lt;head&gt;</code>, CSS, JS — vì đã có sẵn trong <code>part1</code>. Chỉ thêm các <code>&lt;section id="..."&gt;</code> nội dung.</li>
+        <li>Sau khi ghép xong, <strong>cập nhật mục lục</strong> ở sidebar (khối <code>&lt;nav class="toc"&gt;</code>): thêm các dòng <code>&lt;a href="#id-section-moi"&gt;Tiêu đề&lt;/a&gt;</code> tương ứng.</li>
+      </ol>
     </section>
 
-    <section id="notes" class="section">
-      <div class="kicker">Notes</div>
-      <h2>Ghi chú & Phạm vi phần này</h2>
-      <div class="hr"></div>
-      <ul>
-        <li><strong>Định dạng:</strong> nội dung được biên dịch, giữ nguyên thuật ngữ cốt lõi (F, E, IAC, absolute conic, triangulation, bundle adjustment…).</li>
-        <li><strong>Phạm vi:</strong> Do giới hạn dung lượng khi gửi, phần trên đã bao gồm toàn bộ “Foreword”, phần mở đầu “Preface” cốt lõi, và tóm–dịch chi tiết Chương 1 (nội dung trong 40 trang đầu). Mình sẽ tiếp tục lấp đầy các mục còn lại của 40 trang theo đúng bố cục này ở phần tiếp theo nếu bạn ok.</li>
-        <li><strong>Tôn trọng bản quyền:</strong> Bạn đã cung cấp file, nên mình chỉ dùng để dịch/phục vụ học tập cá nhân.</li>
-      </ul>
-    </section>
-
-    <div class="foot">— Hết phần hiển thị trong lượt này —</div>
+    <div class="foot">MVG — Bản dịch song ngữ · Phần 1/?.</div>
   </main>
 </div>
 </body>
 </html>
+""").strip()
+
+out_path = "/mnt/data/mvg_40p_part1_foreword_preface.html"
+with open(out_path, "w", encoding="utf-8") as f:
+    f.write(html)
+
+out_path
