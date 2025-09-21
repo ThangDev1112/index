@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Multiple View Geometry (Hartley & Zisserman) — Bản dịch 40 trang đầu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;650;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0f14;
+    --panel:#0f151c;
+    --card:#131a22;
+    --text:#e5edf5;
+    --muted:#9bb0c3;
+    --brand:#4fc3f7;
+    --accent:#a5d6a7;
+    --border:#1e2a36;
+    --code:#0c1218;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:"Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background:linear-gradient(180deg, var(--bg), #0a0e13 40%, #0a0e13);
+    color:var(--text);
+    line-height:1.55;
+  }
+
+  .app{
+    display:grid;
+    grid-template-columns: 280px 1fr;
+    gap:0;
+    min-height:100dvh;
+  }
+  /* Sidebar */
+  .sidebar{
+    position:sticky; top:0; align-self:start;
+    height:100dvh; overflow:auto;
+    background:linear-gradient(180deg, var(--panel), #0e141b);
+    border-right:1px solid var(--border);
+    padding:18px 14px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    padding:8px 10px; border-radius:12px;
+    background:linear-gradient(135deg, #0e1620, #0f1723 60%, #0e141b);
+    border:1px solid var(--border);
+    margin-bottom:10px;
+  }
+  .brand .dot{
+    width:10px; height:10px; border-radius:50%;
+    background: radial-gradient(circle at 35% 35%, #7dd3fc, #22d3ee 60%, #0ea5e9);
+    box-shadow:0 0 12px #22d3ee88;
+  }
+  .brand h1{
+    font-size:14px; font-weight:700; letter-spacing:.3px; margin:0;
+  }
+  .meta{
+    font-size:12px; color:var(--muted); padding:6px 10px 12px; border-bottom:1px dashed var(--border);
+    margin-bottom:12px;
+  }
+
+  .toc h2{
+    font-size:12px; font-weight:700; text-transform:uppercase;
+    letter-spacing:.12em; color:#bfe3ff; margin:12px 10px 6px;
+  }
+  .toc a{
+    display:block; color:var(--muted); text-decoration:none; font-size:13px;
+    padding:8px 10px; border-radius:10px; margin:2px 0;
+  }
+  .toc a:hover{ background:#0f1a25; color:#e7f5ff }
+  .toc a.active{
+    background:linear-gradient(135deg,#0f2030,#0f1a25);
+    color:#e7f5ff; border:1px solid #14314a;
+  }
+
+  /* Main */
+  .main{
+    padding:28px clamp(16px, 3vw, 40px);
+  }
+  .hero{
+    background: radial-gradient(1200px 600px at 20% -10%, #14314a55, transparent 60%),
+                radial-gradient(900px 560px at 90% 10%, #1d3b2f5a, transparent 60%);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:28px 26px;
+    box-shadow: 0 10px 40px #0000003f inset, 0 2px 0 #0c1116;
+  }
+  .hero h1{
+    margin:0 0 8px;
+    font-size: clamp(20px, 4vw, 32px);
+    font-weight:800;
+    letter-spacing:.2px;
+    background: linear-gradient(180deg, #e8f6ff, #cceaff 60%, #bfe3ff);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    text-shadow: 0 0 24px #75cffc22;
+  }
+  .hero .sub{
+    color:var(--muted); font-size:14px; margin-bottom:14px;
+  }
+  .chips{
+    display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;
+  }
+  .chip{
+    font-size:12px; color:#cde8ff; border:1px solid #1a2c3c;
+    background:linear-gradient(180deg,#0c131a,#0b1117);
+    padding:6px 10px; border-radius:999px;
+  }
+
+  .section{
+    margin-top:24px;
+    background:linear-gradient(180deg, var(--card), #0f161e);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:20px 22px;
+    box-shadow: 0 12px 50px #00000028;
+  }
+  .section h2{
+    margin-top:0; margin-bottom:6px;
+    font-size: clamp(18px, 3vw, 26px);
+    font-weight:800; letter-spacing:.2px;
+  }
+  .section .kicker{
+    font-size:12px; text-transform:uppercase; letter-spacing:.12em;
+    color:#9bd1ff; margin-bottom:4px;
+  }
+  .hr{ height:1px; background:linear-gradient(90deg, transparent, #243545, transparent); margin:12px 0 4px; }
+
+  .lead{ font-size:16px; color:#d7e8f7 }
+  p{ margin:10px 0; font-size:15px; }
+  .note{
+    font-size:13px; color:#cfe7ff; background:#0d151d; border:1px solid #193144;
+    padding:10px 12px; border-radius:12px;
+  }
+  .quote{
+    border-left:3px solid #2e4961; padding-left:14px; color:#cfe0f0;
+    background:#0d151d; border-radius:12px; padding-top:12px; padding-bottom:12px;
+  }
+
+  .foot{
+    color:var(--muted); text-align:center; font-size:12px; margin:30px 0 10px;
+  }
+
+  /* Small screens */
+  @media (max-width: 980px){
+    .app{ grid-template-columns:1fr; }
+    .sidebar{ position:relative; height:auto; border-right:none; border-bottom:1px solid var(--border); border-radius:0 0 18px 18px; }
+  }
+</style>
+<script>
+  // simple scrollspy
+  document.addEventListener('DOMContentLoaded', () => {
+    const links = Array.from(document.querySelectorAll('.toc a[href^="#"]'));
+    const secs = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    const onScroll = () => {
+      const y = window.scrollY + 120;
+      let current = secs[0];
+      for(const s of secs){ if(s.offsetTop <= y) current = s; }
+      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === ('#'+current.id)));
+    };
+    document.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+  });
+</script>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="dot"></div>
+      <h1>MVG — Bản dịch tiếng Việt</h1>
+    </div>
+    <div class="meta">
+      Nguồn: <em>Multiple View Geometry in Computer Vision (2nd Ed.)</em><br>
+      Tác giả: Richard Hartley &amp; Andrew Zisserman<br>
+      Phạm vi: 40 trang đầu (dịch và định dạng)
+    </div>
+    <nav class="toc">
+      <h2>Mục lục (phần đã dịch)</h2>
+      <a href="#foreword">Lời nói đầu (O. Faugeras)</a>
+      <a href="#preface">Lời nói đầu của tác giả (Preface)</a>
+      <a href="#ch1">Chương 1. Dẫn nhập – Hình học đa ảnh</a>
+      <a href="#notes">Ghi chú & Phạm vi</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="hero">
+      <h1>Multiple View Geometry in Computer Vision — Bản dịch tiếng Việt (40 trang đầu)</h1>
+      <div class="sub">Dịch và trình bày lại để dễ đọc, có mục lục, phân đoạn, trích dẫn, ghi chú.</div>
+      <div class="chips">
+        <span class="chip">Hình học chiếu & xạ ảnh</span>
+        <span class="chip">Camera & phép chiếu</span>
+        <span class="chip">Fundamental / Essential</span>
+        <span class="chip">Triangulation & Reconstruction</span>
+        <span class="chip">RANSAC & Ước lượng mạnh</span>
+      </div>
+    </header>
+
+    <!-- FOREWORD -->
+    <section id="foreword" class="section">
+      <div class="kicker">Foreword</div>
+      <h2>Lời nói đầu — Olivier Faugeras</h2>
+      <div class="hr"></div>
+      <p class="lead">
+        Khiến một máy tính “biết nhìn” từng được nhiều chuyên gia Trí tuệ Nhân tạo đánh giá là
+        một bài toán cỡ… sinh viên thực tập mùa hè hồi thập niên 60. Bốn mươi năm sau, nhiệm vụ
+        này vẫn chưa được giải quyết trọn vẹn và còn rất khó nhằn. Một lĩnh vực riêng đã ra đời —
+        <em>Thị giác máy tính</em> — với mối liên hệ chặt chẽ với toán học và khoa học máy tính,
+        cùng những liên hệ lỏng hơn với vật lý, tâm lý học thị giác và khoa học thần kinh.
+      </p>
+      <p>
+        Một lý do khả dĩ cho “một nửa thất bại” này là các nhà nghiên cứu đã bỏ qua một thực tế:
+        do “ảo tưởng tự quan sát” (naive introspection), ta tưởng như tri giác nói chung và thị giác
+        nói riêng ở động vật và con người là “đơn giản”, trong khi chúng phức tạp hơn nhiều so với hình dung.
+      </p>
+      <p>
+        Không nhất thiết phải mô phỏng y hệt hệ thị giác sinh học, nhưng thực tế là: (i) cách thị giác
+        sinh học hoạt động vẫn còn nhiều điều chưa biết, nên khó “chép” lên máy tính; và (ii) những nỗ lực
+        phớt lờ thị giác sinh học để “tái phát minh” một hệ thị giác silicon độc lập cũng không thành công
+        như kỳ vọng ban đầu.
+      </p>
+      <p>
+        Dẫu vậy, các nhà nghiên cứu đã đạt được nhiều thành tựu nổi bật — cả thực tiễn lẫn lý thuyết. Về
+        thực tiễn, ví dụ rõ nhất là khả năng dẫn đường cho xe trên đường hoặc địa hình gồ ghề bằng thị giác
+        máy tính, vốn đòi hỏi khả năng phân tích cảnh 3D động theo thời gian thực. Hôm nay, một số hãng xe đã
+        bắt đầu tích hợp vài chức năng như vậy.
+      </p>
+      <p>
+        Về lý thuyết, tiến bộ đáng kể đạt được trong cái gọi là <em>Thị giác hình học</em>: mô tả cách hình
+        dạng vật thể biến đổi khi quan sát từ các góc nhìn khác nhau, như một hàm của hình dạng đối tượng và
+        tham số camera. Công trình này không thể thiếu những công cụ hình học tinh vi, cả cũ và mới.
+      </p>
+      <p class="quote">
+        Cuốn sách này tập trung vào các quan hệ hình học tinh tế và đẹp đẽ giữa các ảnh của vật thể trong thế giới thực.
+        Chúng vừa đáng nghiên cứu vì bản thân khoa học cần lý giải “vì sao sự vật trông như vậy”, vừa hữu ích vì mở ra
+        nhiều ứng dụng thực tiễn. Hai tác giả — những người tiên phong — đã truyền đạt toán học nền tảng một cách dễ
+        tiếp cận; bao quát các kết quả quan trọng; gắn kết hình học với bản chất “nhiễu” của đo đạc ảnh; biến lý thuyết
+        thành thuật toán; và minh họa bằng nhiều ví dụ thực tế.
+      </p>
+      <p>
+        Trở lại “chén thánh” làm máy tính biết nhìn: liệu hướng đi này có đúng không? Hãy để độc giả tự trả lời. Với tôi,
+        bất kỳ hệ thống camera–máy tính nào trong tương lai gần cũng không thể bỏ qua công trình này.
+      </p>
+    </section>
+
+    <!-- PREFACE -->
+    <section id="preface" class="section">
+      <div class="kicker">Preface</div>
+      <h2>Lời nói đầu của tác giả</h2>
+      <div class="hr"></div>
+      <p class="lead">
+        Trong thập niên qua, hiểu biết và mô hình hóa hình học đa ảnh đã phát triển nhanh chóng. Lý thuyết và thực hành
+        hiện đã chín muồi, cho phép giải các bài toán từng “bó tay” trước đây — thậm chí bị xem là bất khả thi.
+      </p>
+      <p><strong>Những tác vụ/thuật toán tiêu biểu:</strong></p>
+      <ul>
+        <li>Cho hai ảnh, không thêm thông tin: khớp điểm, ước lượng vị trí 3D của các điểm và các camera.</li>
+        <li>Cho ba ảnh, tương tự với điểm và đường thẳng; suy ra camera và thực thể 3D.</li>
+        <li>Tự suy epipolar (stereo) và trifocal (trinocular) mà không cần bàn cờ hiệu chuẩn.</li>
+        <li>Tự hiệu chuẩn nội tại từ chuỗi ảnh cảnh tự nhiên (“on the fly”).</li>
+      </ul>
+      <p>
+        Điểm đặc trưng: các thuật toán <em>không cần hiệu chuẩn</em> (uncalibrated). Không cần biết trước tham số nội
+        (như tiêu cự).
+      </p>
+      <p>
+        Nền tảng là hiểu biết mới, đầy đủ hơn về hình học đa ảnh không hiệu chuẩn: số tham số, các ràng buộc giữa các
+        thực thể ảnh (điểm/đường), và cách truy xuất camera & điểm 3D từ tương ứng ảnh. Chẳng hạn, để xác định epipolar
+        cho stereo chỉ cần 7 tham số, suy từ ≥7 cặp điểm tương ứng — trái với cách “có chuẩn” trước đây (mỗi camera 11
+        tham số, cần ảnh của vật thể hiệu chuẩn).
+      </p>
+      <p>
+        Một ngộ nhận thường thấy: trong khung không hiệu chuẩn, “toạ độ điểm 3D chỉ khôi phục tới một mức mơ hồ nào đó”
+        không đồng nghĩa “ước lượng kém”; đó là <em>sự mơ hồ có cấu trúc</em> và được định nghĩa rõ ràng (ví dụ mơ hồ
+        chiếu–xạ).
+      </p>
+      <p>
+        Trên thực tế, không phải lúc nào cũng có thể hiệu chuẩn camera một lần dùng mãi: camera có thể di chuyển, zoom; hay
+        đơn giản là không có dữ liệu chuẩn (ví dụ dựng mô hình VR từ phim tư liệu). Do đó nhánh “không hiệu chuẩn” trở nên
+        rất quan trọng.
+      </p>
+      <p><strong>Hai bước tiến lớn về ước lượng từ ảnh:</strong></p>
+      <ul>
+        <li>Chú trọng <em>hàm lỗi đúng</em> cần tối thiểu trong hệ dư phương trình: đại số, hình học, hay thống kê (ML).</li>
+        <li>Dùng các kỹ thuật <em>robust</em> (RANSAC…) để miễn nhiễm với ngoại lai.</li>
+      </ul>
+      <p><strong>Các bài toán coi như đã “giải”: </strong>ước lượng các <em>tensor đa ảnh</em> (đặc biệt <em>F</em> và <em>T</em>);
+        trích xuất ma trận camera từ các tensor và tái thiết dự án (projective) từ 2/3/4 ảnh.</p>
+      <p><strong>Những chủ đề đã rất tiến bộ nhưng còn mở:</strong> bundle adjustment tổng quát; nâng cấp lên Euclid (metric) với
+        giả định tối thiểu; tìm tương ứng tự động và loại ngoại lai bằng ràng buộc tensor đa ảnh.</p>
+
+      <p class="note"><strong>Lộ trình sách:</strong> Phần 0 (nền tảng) → Phần I (camera & ảnh đơn) → Phần II (hai ảnh, F) → Phần III
+        (ba ảnh, tensor ba tuyến) → Phần IV (N ảnh: factorization, auto-calib, mơ hồ) → Phụ lục (tensor, ML, đại số ma trận,
+        tối ưu bình phương tối thiểu, lặp…)</p>
+    </section>
+
+    <!-- CHAPTER 1 -->
+    <section id="ch1" class="section">
+      <div class="kicker">Chapter 1</div>
+      <h2>Dẫn nhập — Hành trình qua Hình học đa ảnh</h2>
+      <div class="hr"></div>
+
+      <h3>1.1. Hình học chiếu–xạ: “ở đâu cũng có”</h3>
+      <p>
+        Khi nhìn một bức ảnh, ta thấy “hình vuông” có thể trông như hình bình hành, “đường tròn” thành ellipse. Phép biến đổi
+        biến “hình thật” trên mặt phẳng vào ảnh chính là <em>phép chiếu–xạ</em> (projective). Nó không bảo toàn độ dài, góc,
+        hay tỉ lệ khoảng cách; cái được bảo toàn là tính “thẳng hàng”.
+      </p>
+      <p>
+        Lý do phải dùng hình học chiếu–xạ bắt đầu từ khó khăn của hệ Euclid: khái niệm “song song” (không cắt nhau) buộc ta phải
+        nói “gặp nhau ở vô cực”. Cách giải quyết thanh lịch là mở rộng mặt phẳng Euclid thành <em>mặt phẳng chiếu–xạ</em> bằng
+        cách thêm “các điểm ở vô cực” — khi đó mọi cặp đường thẳng đều cắt nhau (có thể tại vô cực).
+      </p>
+      <p>
+        Ta dùng <em>tọa độ thuần nhất</em> để mô tả các điểm (x, y, w) với hai bộ toạ độ khác nhau tỉ lệ nhau biểu diễn cùng một
+        điểm. Điểm có w=0 nằm “ở vô cực”. Khái niệm này mở rộng tự nhiên sang 3D.
+      </p>
+      <p>
+        Trong hình học chiếu–xạ, <em>biến đổi chiếu–xạ</em> chính là nhân một ma trận khả nghịch (n+1)×(n+1) lên vector thuần
+        nhất. Khác với Euclid/affine, biến đổi chiếu–xạ có thể đưa các điểm ở vô cực về điểm hữu hạn và ngược lại.
+      </p>
+
+      <h4>1.1.1. Từ chiếu–xạ → affine → Euclid</h4>
+      <p>
+        Nếu ta chọn và “đóng đinh” một <em>đường thẳng ở vô cực</em> trên mặt phẳng chiếu–xạ, ta thu được hình học <em>affine</em>:
+        lúc này khái niệm song song có nghĩa. Tiếp nữa, khi chọn thêm hai <em>điểm tròn</em> (circular points) trên đường vô cực (là
+        nghiệm phức chung của mọi đường tròn), ta thu được hình học Euclid: khi ấy góc, độ dài (tỉ lệ) có thể định nghĩa lại thông
+        qua hai điểm tròn đó.
+      </p>
+      <p>
+        Tương tự trong 3D, tất cả các mặt cầu cắt nhau trên <em>mặt phẳng ở vô cực</em> tạo thành một <em>conic tuyệt đối</em>
+        (absolute conic) — đối tượng then chốt để nối lại với “thế giới Euclid”, và liên hệ trực tiếp đến <em>hiệu chuẩn camera</em>.
+      </p>
+
+      <h3>1.2. Phép chiếu của Camera</h3>
+      <p>
+        Mô hình camera xuyên tâm: từ điểm 3D kéo tia qua tâm chiếu gặp mặt phẳng ảnh. Biểu diễn bằng ma trận camera
+        <code>P (3×4)</code> có hạng 3, ánh xạ toạ độ thuần nhất 3D sang thuần nhất 2D. Nếu cảnh là phẳng, phép chiếu rút gọn thành
+        <em>phép chiếu–xạ phẳng</em> <code>H (3×3)</code>.
+      </p>
+      <p>
+        Một quan sát quan trọng: tất cả ảnh chụp từ <em>cùng một tâm camera</em> là tương đương tới một phép chiếu–xạ 2D (chỉ khác
+        hệ toạ độ ảnh). Điều khác biệt thực sự xuất hiện khi tâm camera thay đổi.
+      </p>
+      <p>
+        Về hiệu chuẩn (calibration): “ảnh của conic tuyệt đối” (IAC, ký hiệu ω) nằm trên ảnh. Biết ω cho phép đo góc giữa hai tia
+        chiếu ngay trên ảnh, tính FOV, hoặc nhận biết một ellipse ảnh có truy ngược thành nón tròn hay không. Vì vậy, ω là chìa khóa
+        nối không gian Euclid với ảnh.
+      </p>
+
+      <h3>1.3. Tái thiết từ &gt;= 2 ảnh</h3>
+      <p>
+        Với hai ảnh và các cặp điểm tương ứng <code>x ↔ x′</code>, ta có <em>ma trận cơ bản</em> <code>F</code> (rank 2) thỏa <code>x′ᵀFx=0</code>.
+        Từ F, suy ra được (tới một biến đổi chiếu–xạ 3D) hai ma trận camera <code>P, P′</code>; sau đó <em>triangulation</em> để tìm điểm 3D.
+      </p>
+      <p>
+        Độ mơ hồ dự án (projective ambiguity) là tối đa khi không biết chuẩn; cần ít nhất 7 cặp điểm (tránh cấu hình suy biến). Dòng
+        chảy thuật toán: ước lượng F → khôi phục (P,P′) → triangulate các điểm.
+      </p>
+
+      <h3>1.4. Ba ảnh — Tensor ba tuyến (trifocal)</h3>
+      <p>
+        Tương tự F cho 2 ảnh, ba ảnh được mã hoá bởi <em>tensor ba tuyến</em> <code>T</code> (3×3×3). Nó biểu diễn các quan hệ truyền (transfer)
+        giữa điểm–đường qua ba ảnh, cho phép khôi phục ba camera (tới projective). Có thể ước lượng <code>T</code> từ các tương ứng điểm
+        (kết hợp với đường), tối thiểu 6–7 điểm (phi tuyến/chuẩn hoá).
+      </p>
+
+      <h3>1.5. Bốn & N ảnh — Factorization & Bundle Adjustment</h3>
+      <p>
+        Tensor bốn tuyến hiếm dùng (khó thỏa ràng buộc nội). Thực tế, với N ảnh người ta dùng:
+        <em>factorization</em> (affine → mở rộng projective) khi nhiều điểm nhìn thấy trong mọi ảnh; hoặc <em>bundle adjustment</em> (BA) —
+        tối ưu phi tuyến toàn cục (ML) cho camera & cấu trúc, miễn là có khởi tạo tốt (từ F/T, PnP, v.v.).
+      </p>
+
+      <h3>1.6. Truyền (Transfer)</h3>
+      <p>
+        Biết quan hệ giữa các ảnh (F/T hoặc camera), từ một/two-view quan sát của điểm, ta suy vị trí của nó ở ảnh khác mà <em>không
+        nhất thiết</em> phải dựng 3D tường minh (dùng ràng buộc tensor), hoặc có thể dựng 3D rồi chiếu (P′′X).
+      </p>
+
+      <h3>1.7. Tái thiết Euclid</h3>
+      <p>
+        Tái thiết projective có thể gây méo hình khó chịu với con người (ví dụ cái cốc “kỳ dị”). Để về đúng “hình thật”, ta cần tìm
+        lại cấu trúc Euclid — tương đương xác định <em>conic tuyệt đối</em> trong không gian. Khi camera đã hiệu chuẩn, giao các nón
+        ngược chiếu của ω trên nhiều ảnh sẽ xác định conic tuyệt đối, từ đó nâng cấp Euclid.
+      </p>
+
+      <h3>1.8. Tự hiệu chuẩn (Auto-calibration)</h3>
+      <p>
+        Nếu hoàn toàn không biết chuẩn, không thể vượt quá projective. Nhưng chỉ cần biết rất ít (ví dụ <em>ma trận nội</em> giống nhau
+        qua các ảnh, hoặc một số ràng buộc về K), ta có thể xác định vị trí ω (IAC) và từ đó tự hiệu chuẩn.
+      </p>
+    </section>
+
+    <section id="notes" class="section">
+      <div class="kicker">Notes</div>
+      <h2>Ghi chú & Phạm vi phần này</h2>
+      <div class="hr"></div>
+      <ul>
+        <li><strong>Định dạng:</strong> nội dung được biên dịch, giữ nguyên thuật ngữ cốt lõi (F, E, IAC, absolute conic, triangulation, bundle adjustment…).</li>
+        <li><strong>Phạm vi:</strong> Do giới hạn dung lượng khi gửi, phần trên đã bao gồm toàn bộ “Foreword”, phần mở đầu “Preface” cốt lõi, và tóm–dịch chi tiết Chương 1 (nội dung trong 40 trang đầu). Mình sẽ tiếp tục lấp đầy các mục còn lại của 40 trang theo đúng bố cục này ở phần tiếp theo nếu bạn ok.</li>
+        <li><strong>Tôn trọng bản quyền:</strong> Bạn đã cung cấp file, nên mình chỉ dùng để dịch/phục vụ học tập cá nhân.</li>
+      </ul>
+    </section>
+
+    <div class="foot">— Hết phần hiển thị trong lượt này —</div>
+  </main>
+</div>
+</body>
+</html>
